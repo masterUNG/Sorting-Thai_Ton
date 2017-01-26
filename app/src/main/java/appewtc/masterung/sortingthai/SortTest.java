@@ -36,7 +36,7 @@ public class SortTest extends Activity {
             R.drawable.index37,R.drawable.index38,R.drawable.index39,
             R.drawable.index40,R.drawable.index41,R.drawable.index42,
             R.drawable.index43,};
-    private int anInt;
+    private int anInt;  // ค่า index ที่รับมา
     private int[] spackInts = new int[]{R.raw.index0, R.raw.index1,
             R.raw.index2, R.raw.index3, R.raw.index4, R.raw.index5,
             R.raw.index6, R.raw.index7, R.raw.index8, R.raw.index9,
@@ -72,41 +72,46 @@ public class SortTest extends Activity {
         builder.setIcon(R.drawable.doremon48);
         builder.setTitle("What do you want ?");
         builder.setMessage("Please Click Button");
-        builder.setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+        //กลับหน้าเก่า
+        builder.setNegativeButton("Back", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
 
-                //Restart Activity
+                if (anInt == 0) {
+
+                } else {
+                    Intent intent = getIntent();
+                    intent.putExtra("Index", anInt -= 1);
+                    Log.d("27janV1", "index หลังคลิก ==> " + anInt);
+                    finish();
+                    startActivity(intent);
+                }
+
+
+            }
+        });
+
+        //ไปเลือกตัวอักษรใหม่
+        builder.setNeutralButton("Home", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+
+        // ไปคำต่อไป
+        builder.setPositiveButton("Next", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                Log.d("27janV1", "index ก่อนคลิก ==> " + anInt);
+
                 Intent intent = getIntent();
+                intent.putExtra("Index", anInt += 1);
+                Log.d("27janV1", "index หลังคลิก ==> " + anInt);
                 finish();
                 startActivity(intent);
 
-                dialogInterface.dismiss();
-            }
-        });
-//        builder.setNeutralButton("Speak", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                //Sound Effect
-//                MediaPlayer mediaPlayer = MediaPlayer.create(getBaseContext(),
-//                        spackInts[anInt]);
-//                mediaPlayer.start();
-//                //Clear Media
-//                mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-//                    @Override
-//                    public void onCompletion(MediaPlayer mediaPlayer) {
-//                        mediaPlayer.release();
-//                    }
-//                });
-//
-//                dialogInterface.dismiss();
-//            }
-//        });
-        builder.setPositiveButton("Back", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                finish();
             }
         });
 
